@@ -8,6 +8,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import dev.bytangle.artime.composables.Airtime
+import dev.bytangle.artime.navigation.AirtimeDestination
 import dev.bytangle.artime.ui.theme.AirtimeTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,8 +18,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AirtimeTheme {
-
+                val navHostController = rememberNavController()
+                Airtime(
+                    navHostController = navHostController,
+                    airtimeDestinations = AirtimeDestination.destinations
+                )
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun AirtimePreview() {
+    Airtime(navHostController = rememberNavController(), airtimeDestinations = AirtimeDestination.destinations)
 }
