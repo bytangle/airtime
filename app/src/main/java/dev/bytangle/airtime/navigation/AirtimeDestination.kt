@@ -1,10 +1,10 @@
-package dev.bytangle.artime.navigation
+package dev.bytangle.airtime.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.*
 import androidx.compose.ui.graphics.vector.ImageVector
-import dev.bytangle.artime.R
+import dev.bytangle.airtime.R
 
 sealed class AirtimeDestination(val route : String, @StringRes val resourceId : Int, val icon : ImageVector) {
     object Scan : AirtimeDestination(route = "scan", resourceId = R.string.scan, icon = Icons.TwoTone.AspectRatio)

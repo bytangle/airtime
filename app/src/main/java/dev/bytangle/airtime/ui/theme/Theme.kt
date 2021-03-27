@@ -1,4 +1,4 @@
-package dev.bytangle.artime.ui.theme
+package dev.bytangle.airtime.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

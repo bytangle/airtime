@@ -1,4 +1,4 @@
-package dev.bytangle.artime.composables.components
+package dev.bytangle.airtime.composables.components
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
-import dev.bytangle.artime.navigation.AirtimeDestination
+import dev.bytangle.airtime.navigation.AirtimeDestination
 
 @Composable
 fun BottomNavBar(navHostController: NavHostController, airtimeDestinations : List<AirtimeDestination>, modifier : Modifier = Modifier) {

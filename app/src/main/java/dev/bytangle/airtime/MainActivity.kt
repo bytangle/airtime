@@ -1,17 +1,14 @@
-package dev.bytangle.artime
+package dev.bytangle.airtime
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import dev.bytangle.artime.composables.Airtime
-import dev.bytangle.artime.navigation.AirtimeDestination
-import dev.bytangle.artime.ui.theme.AirtimeTheme
+import dev.bytangle.airtime.composables.Airtime
+import dev.bytangle.airtime.navigation.AirtimeDestination
+import dev.bytangle.airtime.ui.theme.AirtimeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

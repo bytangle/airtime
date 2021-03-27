@@ -1,4 +1,4 @@
-package dev.bytangle.artime.composables.components
+package dev.bytangle.airtime.composables.components
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text

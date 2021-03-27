@@ -1,4 +1,4 @@
-package dev.bytangle.artime
+package dev.bytangle.airtime
 
 import org.junit.Test
 

@@ -1,12 +1,12 @@
-package dev.bytangle.artime.composables
+package dev.bytangle.airtime.composables
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import dev.bytangle.artime.composables.components.BottomNavBar
-import dev.bytangle.artime.navigation.AirtimeDestination
-import dev.bytangle.artime.navigation.AirtimeNavHost
+import dev.bytangle.airtime.composables.components.BottomNavBar
+import dev.bytangle.airtime.navigation.AirtimeDestination
+import dev.bytangle.airtime.navigation.AirtimeNavHost
 
 @Composable
 fun Airtime(

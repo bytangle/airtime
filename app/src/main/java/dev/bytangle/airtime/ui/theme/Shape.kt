@@ -1,4 +1,4 @@
-package dev.bytangle.artime.ui.theme
+package dev.bytangle.airtime.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
