@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -40,8 +41,12 @@ fun ScanDestination(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Scan")
-                }
+                    Text(
+                        text = "Scan",
+                        fontSize = 26.sp
+                    )
+                },
+                backgroundColor = colorResource(id = R.color.airtime_bar_bg)
             )
         }
     ) {
@@ -92,14 +97,19 @@ fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity)
         color = colorResource(id = R.color.airtime_bg)
     ) {
         Column() {
-            val commonPadding = 8.dp
+            val commonPadding = 10.dp
             Surface(
-                modifier = Modifier
-                    .padding(start = commonPadding, end = commonPadding, top = commonPadding, bottom = 2.dp)
-                    .weight(1F),
                 shape = MaterialTheme.shapes.medium,
-                elevation = 6.dp,
-                color = colorResource(id = R.color.airtime_on_bg)
+                elevation = 2.dp,
+                modifier = Modifier
+                    .padding(
+                        start = commonPadding,
+                        end = commonPadding,
+                        top = commonPadding,
+                        bottom = commonPadding
+                    )
+                    .weight(1F),
+                color = colorResource(id = R.color.airtime_bg)
             ) {
                 AndroidViewBinding(
                     factory = ScanPreviewBinding::inflate
@@ -110,27 +120,7 @@ fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity)
                     ) // this start the preview and view analyzer use cases
                 }
             }
-            Spacer(modifier = Modifier.height(2.dp))
-            Surface(
-                modifier = Modifier
-                    .padding(start = commonPadding, end = commonPadding, top = 2.dp, bottom = commonPadding)
-                    .height(200.dp)
-                    .fillMaxWidth(),
-                shape = MaterialTheme.shapes.medium,
-                elevation = 6.dp,
-                color = colorResource(id = R.color.feedback_bg)
-            ) {
-                Column(
-                ) {
-                    Text(
-                        "Recharge in progress...",
-                        style = MaterialTheme.typography.h4,
-                        fontWeight = FontWeight.ExtraLight,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(80.dp))
         }
     }
 }

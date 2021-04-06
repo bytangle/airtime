@@ -2,12 +2,13 @@
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="purple_700">@color/airtime_bar_bg</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="airtime_on_bg">#FAFAFA</color>
+    <color name="white_2">#FAFAFA</color>
     <color name="airtime_bg">@color/white</color>
-    <color name="feedback_bg">@color/airtime_on_bg</color>
+    <color name="airtime_bar_bg">#CDC9C9</color>
+    <color name="feedback_bg">#75CDC9C9</color>
 </resources>

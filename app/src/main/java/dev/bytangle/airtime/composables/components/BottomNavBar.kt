@@ -1,31 +1,44 @@
 package dev.bytangle.airtime.composables.components
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
+import dev.bytangle.airtime.R
 import dev.bytangle.airtime.navigation.AirtimeDestination
 
 @Composable
 fun BottomNavBar(navHostController: NavHostController, airtimeDestinations : List<AirtimeDestination>, modifier : Modifier = Modifier) {
-    BottomNavigation(modifier = modifier) {
+    BottomNavigation(
+        modifier = modifier.height(80.dp),
+        backgroundColor = colorResource(id = R.color.airtime_bar_bg)
+    ) {
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
         
         airtimeDestinations.forEach { airtimeDestination ->  
             BottomNavigationItem(
-                icon = { Icon(imageVector = airtimeDestination.icon, contentDescription = stringResource(
-                    id = airtimeDestination.resourceId
-                )) },
-                label = { Text(stringResource(id = airtimeDestination.resourceId)) },
+                icon = { Icon(
+                    modifier = Modifier.size(26.dp),
+                    imageVector = airtimeDestination.icon,
+                    contentDescription = stringResource(
+                        id = airtimeDestination.resourceId
+                    )
+                ) },
+                label = { Text(
+                    text = stringResource(id = airtimeDestination.resourceId),
+                    fontSize =  16.sp
+                ) },
                 selected = currentRoute == airtimeDestination.route,
                 onClick = {
                     navHostController.navigate(airtimeDestination.route) {
