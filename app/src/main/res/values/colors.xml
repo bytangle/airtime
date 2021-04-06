@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="airtime_on_bg">#FAFAFA</color>
+    <color name="airtime_bg">@color/white</color>
+    <color name="feedback_bg">@color/airtime_on_bg</color>
 </resources>
