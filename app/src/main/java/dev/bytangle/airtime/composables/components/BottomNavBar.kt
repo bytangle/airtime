@@ -29,15 +29,13 @@ fun BottomNavBar(navHostController: NavHostController, airtimeDestinations : Lis
         airtimeDestinations.forEach { airtimeDestination ->  
             BottomNavigationItem(
                 icon = { Icon(
-                    modifier = Modifier.size(26.dp),
                     imageVector = airtimeDestination.icon,
                     contentDescription = stringResource(
                         id = airtimeDestination.resourceId
                     )
                 ) },
                 label = { Text(
-                    text = stringResource(id = airtimeDestination.resourceId),
-                    fontSize =  16.sp
+                    text = stringResource(id = airtimeDestination.resourceId)
                 ) },
                 selected = currentRoute == airtimeDestination.route,
                 onClick = {
