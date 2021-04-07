@@ -8,6 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -32,10 +34,15 @@ fun BottomNavBar(navHostController: NavHostController, airtimeDestinations : Lis
                     imageVector = airtimeDestination.icon,
                     contentDescription = stringResource(
                         id = airtimeDestination.resourceId
-                    )
+                    ),
+                    tint = colorResource(id = R.color.airtime_primary)
                 ) },
                 label = { Text(
-                    text = stringResource(id = airtimeDestination.resourceId)
+                    text = stringResource(id = airtimeDestination.resourceId),
+                    color = colorResource(id = R.color.airtime_primary),
+                    fontFamily = FontFamily(listOf(
+                        Font(R.font.sourcesanspro_light)
+                    ))
                 ) },
                 selected = currentRoute == airtimeDestination.route,
                 onClick = {

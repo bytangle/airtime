@@ -6,9 +6,15 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="faded_black">#A9000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="white_2">#FAFAFA</color>
     <color name="airtime_bg">@color/white</color>
-    <color name="airtime_bar_bg">#CDC9C9</color>
+    <color name="airtime_bar_bg">#FFFFFF</color>
     <color name="feedback_bg">#75CDC9C9</color>
+    <color name="blue_bg">#C2C0CE</color>
+    <color name="airtime_primary">#E93131</color>
+    <color name="airtime_secondary">#DD12AA</color>
+    <color name="airtime_tertiary">#D7AE30</color>
 </resources>
+<!-- #CDC9C9 -->

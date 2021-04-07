@@ -24,6 +24,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,6 +47,9 @@ fun ScanDestination(
                 title = {
                     Text(
                         text = "Scan",
+                        fontFamily = FontFamily(listOf(
+                            Font(R.font.sourcesanspro_light)
+                        )),
                         fontSize = 26.sp
                     )
                 },
@@ -96,7 +101,7 @@ fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity)
     val scanViewModel : ScanViewModel = viewModel()
     Surface(
         modifier = modifier,
-        color = colorResource(id = R.color.airtime_bg)
+        color = colorResource(id = R.color.blue_bg)
     ) {
         Column() {
             val commonPadding = 10.dp
