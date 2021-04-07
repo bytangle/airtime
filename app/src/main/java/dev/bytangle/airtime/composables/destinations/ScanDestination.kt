@@ -9,8 +9,10 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.rounded.FilterList
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -23,6 +25,7 @@ import dev.bytangle.airtime.databinding.ScanPreviewBinding
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -55,7 +58,24 @@ fun ScanDestination(
                 },
                 backgroundColor = colorResource(id = R.color.airtime_bar_bg)
             )
-        }
+        },
+        floatingActionButton = {
+            val icon = remember { mutableStateOf(Icons.Filled.FlashlightOff)}
+            FloatingActionButton(
+                onClick = {
+                          if (icon.value == Icons.Filled.FlashlightOff) icon.value = Icons.Filled.FlashlightOn
+                            else icon.value = Icons.Filled.FlashlightOff
+                },
+                backgroundColor = colorResource(id = R.color.airtime_tertiary),
+                contentColor = MaterialTheme.colors.onSurface,
+                shape = CircleShape,
+                modifier = Modifier.padding(bottom = 46.dp),
+                elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 6.dp, pressedElevation = 10.dp),
+            ) {
+                Icon(imageVector = icon.value, contentDescription = null)
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End
     ) {
         // check and request permission
         val permissionGranted = remember { mutableStateOf(false) }

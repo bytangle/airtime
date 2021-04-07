@@ -22,7 +22,7 @@ import dev.bytangle.airtime.navigation.AirtimeDestination
 @Composable
 fun BottomNavBar(navHostController: NavHostController, airtimeDestinations : List<AirtimeDestination>, modifier : Modifier = Modifier) {
     BottomNavigation(
-        modifier = modifier.height(80.dp),
+        //modifier = modifier.height(80.dp),
         backgroundColor = colorResource(id = R.color.airtime_bar_bg)
     ) {
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()
