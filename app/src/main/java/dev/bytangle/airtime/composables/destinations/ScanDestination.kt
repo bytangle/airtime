@@ -60,11 +60,11 @@ fun ScanDestination(
             )
         },
         floatingActionButton = {
-            val icon = remember { mutableStateOf(Icons.Filled.FlashlightOff)}
+            val icon = remember { mutableStateOf(Icons.Filled.FlashlightOn)}
             FloatingActionButton(
                 onClick = {
-                          if (icon.value == Icons.Filled.FlashlightOff) icon.value = Icons.Filled.FlashlightOn
-                            else icon.value = Icons.Filled.FlashlightOff
+                          if (icon.value == Icons.Filled.FlashlightOn) icon.value = Icons.Filled.FlashlightOff
+                            else icon.value = Icons.Filled.FlashlightOn
                 },
                 backgroundColor = colorResource(id = R.color.airtime_tertiary),
                 contentColor = MaterialTheme.colors.onSurface,
