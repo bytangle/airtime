@@ -253,12 +253,12 @@ fun AirtimeUsage(
             Text(text = if (usage.network == AirtimeSupportedNetwork.NINE_MOBILE) "9MOBILE" else usage.network.name, modifier = Modifier.align(Alignment.CenterHorizontally), fontFamily = FontFamily(listOf(
                 Font(R.font.sourcesanspro_light))))
             Text(
-                text = usage.totalAmount.toString(),
+                text = "N${usage.totalAmount.toInt()}",
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 fontSize = 35.sp,
                 color = colorResource(id = R.color.airtime_tertiary),
                 fontFamily = FontFamily(listOf(
-                    Font(R.font.sourcesanspro_black)
+                    Font(R.font.sourcesanspro_light)
                 ))
             )
         }
