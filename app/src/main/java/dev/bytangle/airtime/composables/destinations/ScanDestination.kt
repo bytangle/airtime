@@ -80,11 +80,11 @@ fun ScanDestination(
         // check and request permission
         val permissionGranted = remember { mutableStateOf(false) }
         when {
-            ContextCompat.checkSelfPermission(activity, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
                 permissionGranted.value = true
             }
 
-            ActivityCompat.shouldShowRequestPermissionRationale(activity, android.Manifest.permission.CAMERA) -> {
+            ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA) -> {
                 // You should use a dialog to display an educational UI
             }
 
