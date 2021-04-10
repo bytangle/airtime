@@ -1,6 +1,51 @@
 package dev.bytangle.airtime.utils
 
 /*
+  * Used to get the prefix and network given a particular rechargePin
+ */
+fun determineRechargePinNetworkAndPrefix(rechargePin : CharSequence) : AirtimeNetworkAndPinPrefix {
+       return when {
+           AirtimeFilterPatterns.GLO_RECHARGE_PIN_REGEX.matches(rechargePin) -> {
+               AirtimeNetworkAndPinPrefix(
+                   prefix = AirtimeRechargePrefix.GLO_PIN_PREFIX,
+                   network = AirtimeSupportedNetwork.GLO
+               )
+           }
+
+           AirtimeFilterPatterns.NINE_MOBILE_RECHARGE_PIN_REGEX.matches(rechargePin) -> {
+               AirtimeNetworkAndPinPrefix(
+                   prefix = AirtimeRechargePrefix.NINE_MOBILE_PIN_PREFIX,
+                   network = AirtimeSupportedNetwork.NINE_MOBILE
+               )
+           }
+
+           AirtimeFilterPatterns.AIRTEL_RECHARGE_PIN_REGEX.matches(rechargePin) -> {
+               AirtimeNetworkAndPinPrefix(
+                   prefix = AirtimeRechargePrefix.AIRTEL_PIN_PREFIX,
+                   network = AirtimeSupportedNetwork.AIRTEL
+               )
+           }
+
+            AirtimeFilterPatterns.MTN_RECHARGE_PIN_REGEX.matches(rechargePin) -> {
+                val mtnPrefix = when(rechargePin.length) {
+                    10 -> AirtimeRechargePrefix.MTN_10_DIGITS_PIN_PREFIX
+                    16 -> AirtimeRechargePrefix.MTN_16_DIGITS_PIN_PREFIX
+                    17 -> AirtimeRechargePrefix.MTN_17_DIGITS_PIN_PREFIX
+                    else -> ""
+                }
+
+                AirtimeNetworkAndPinPrefix(
+                    prefix = mtnPrefix,
+                    network = AirtimeSupportedNetwork.MTN
+                )
+            }
+           else -> {
+               AirtimeNetworkAndPinPrefix(network = AirtimeSupportedNetwork.UNKNOWN, prefix = "")
+           }
+       }
+}
+
+/*
 Extraction Functions
  */
 
@@ -12,7 +57,7 @@ fun extractRechargePin(rawInput : String) : CharSequence? {
 
 fun extractRechargePinPrefix(rawInput: String) : CharSequence? {
     return filter(rawInput, AirtimeFilterPatterns.RECHARGE_PIN_PREFIX_REGEX).firstOrNull()?.let {
-        return extractSubstringUsingFirstAndLastIndices(it.value, getFirstAndLastIndexOfChar(it.value, "\\*"))
+        return extractSubstringUsingFirstAndLastIndices(it.value, getFirstAndLastIndexOfRegexSpec(it.value, Regex("\\*")))
     }
 }
 
@@ -27,12 +72,19 @@ object AirtimeFilterPatterns {
     val RECHARGE_PIN_REGEX = Regex("^(\\s+|\\w+)?(\\s+|\\w+)?(\\s+|\\w+)?\\d{3,5}(((-|\\s)\\d{3,5})+)?((-|\\s)\\d{3,5})(\\s+)?$", RegexOption.MULTILINE)
     val AMOUNT_REGEX = Regex("^(\\s+|\\w+)?(\\s+|\\w+)?(\\s+|\\w+)?N?\\d{1,4}0(\\s+)?$", RegexOption.MULTILINE)
 
-    val MTN_RECHARGE_PIN_REGEX_ONE = Regex("^\\d{5}(-|\\s)\\d{5}$", RegexOption.MULTILINE)
-    val MTN_RECHARGE_PIN_REGEX_TWO = Regex("^\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}$", RegexOption.MULTILINE)
-    val MTN_RECHARGE_PIN_REGEX_THREE = Regex("^\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{5}$", RegexOption.MULTILINE)
+    val MTN_RECHARGE_PIN_REGEX = Regex("^((\\d{5}(-|\\s)\\d{5})|(\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4})|(\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{5}))$", RegexOption.MULTILINE)
     val NINE_MOBILE_RECHARGE_PIN_REGEX = Regex("^\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{3}$", RegexOption.MULTILINE)
     val GLO_RECHARGE_PIN_REGEX = Regex("^\\d{5}(-|\\s)\\d{5}(-|\\s)\\d{5}$", RegexOption.MULTILINE)
     val AIRTEL_RECHARGE_PIN_REGEX = Regex("^\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}\$", RegexOption.MULTILINE)
+}
+
+object AirtimeRechargePrefix {
+    val MTN_10_DIGITS_PIN_PREFIX = "*3551*"
+    val MTN_16_DIGITS_PIN_PREFIX = "*2282*"
+    val MTN_17_DIGITS_PIN_PREFIX = "*555*"
+    val GLO_PIN_PREFIX = "*123*"
+    val AIRTEL_PIN_PREFIX = "*126*"
+    val NINE_MOBILE_PIN_PREFIX = "*222*"
 }
 
 fun filter(rawInput: String, spec : Regex) : Sequence<MatchResult> {
@@ -46,11 +98,6 @@ fun extractSubstringUsingFirstAndLastIndices(input : CharSequence, pair: Pair<In
 fun getFirstAndLastIndexOfInts(input : CharSequence) : Pair<Int, Int> {
     val isIntRegex = Regex("\\d")
     return getFirstAndLastIndexOfRegexSpec(input, isIntRegex)
-}
-
-fun getFirstAndLastIndexOfChar(input : CharSequence, pattern : CharSequence) : Pair<Int, Int> {
-    val isCharRegex = Regex("$pattern")
-    return getFirstAndLastIndexOfRegexSpec(input, isCharRegex)
 }
 
 private fun getFirstAndLastIndexOfRegexSpec(input : CharSequence, regex: Regex) : Pair<Int, Int> {

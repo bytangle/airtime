@@ -5,12 +5,12 @@ data class AirtimeProcessedResult(
     val assumedNetwork : AirtimeSupportedNetwork,
     val rechargePin : String,
     val amount : String,
-    val pinPrefix: AirtimePinPrefix
+    val pinPrefix: AirtimeNetworkAndPinPrefix
 )
 
-data class AirtimePinPrefix(
+data class AirtimeNetworkAndPinPrefix(
     val network: AirtimeSupportedNetwork,
-    val suffix : String
+    val prefix : String
 )
 
 data class CalculatedAirtimeUsages(
