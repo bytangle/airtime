@@ -17,8 +17,8 @@ class AirtimeImageAnalyzer : ImageAnalysis.Analyzer {
 
             // recognition block
             recognizer.process(image).addOnSuccessListener { visionText ->
-                val resultText = visionText.text;
-                Log.d("TextRecognition", resultText)
+                // this class handles filtering of text
+                AirtimeTextFilter.process(visionText)
             }.addOnFailureListener { err ->
 
             }.addOnCompleteListener {
@@ -26,7 +26,7 @@ class AirtimeImageAnalyzer : ImageAnalysis.Analyzer {
             }
 
         } else {
-
+            // do something, like inform the user
         }
     }
 
