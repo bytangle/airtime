@@ -6,5 +6,8 @@ import dev.bytangle.airtime.utils.AirtimeProcessedResult
 
 object AirtimeTextFilter {
     private lateinit var chunks : String
-
+//    fun process(text : Text) : List<AirtimeProcessedResult> {
+//        chunks = text.text
+//        //val rechargePin = filterRechargePin(chunks)
+//    }
 }
