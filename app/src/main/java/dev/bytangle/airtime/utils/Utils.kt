@@ -58,6 +58,10 @@ object AirtimeFilterPatterns {
     val AIRTEL_RECHARGE_PIN_REGEX = Regex("^\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}(-|\\s)\\d{4}\$", RegexOption.MULTILINE)
 }
 
+fun filter(chunks : String, spec : Regex) : Sequence<MatchResult> {
+    return spec.findAll(chunks)
+}
+
 fun extractSubstringUsingFirstAndLastIndices(input : CharSequence, pair: Pair<Int, Int>) : CharSequence {
     return input.slice(pair.first..pair.second)
 }
