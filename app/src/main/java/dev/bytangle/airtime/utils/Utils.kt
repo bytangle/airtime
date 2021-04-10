@@ -28,9 +28,10 @@ fun determineRechargePinNetworkAndPrefix(rechargePin : CharSequence) : AirtimeNe
 
             AirtimeFilterPatterns.MTN_RECHARGE_PIN_REGEX.matches(rechargePin) -> {
                 val mtnPrefix = when(rechargePin.length) {
-                    10 -> AirtimeRechargePrefix.MTN_10_DIGITS_PIN_PREFIX
-                    16 -> AirtimeRechargePrefix.MTN_16_DIGITS_PIN_PREFIX
-                    17 -> AirtimeRechargePrefix.MTN_17_DIGITS_PIN_PREFIX
+                    // - included in the count
+                    11 -> AirtimeRechargePrefix.MTN_10_DIGITS_PIN_PREFIX
+                    19 -> AirtimeRechargePrefix.MTN_16_DIGITS_PIN_PREFIX
+                    20 -> AirtimeRechargePrefix.MTN_17_DIGITS_PIN_PREFIX
                     else -> ""
                 }
 
@@ -57,7 +58,13 @@ fun extractRechargePin(rawInput : String) : CharSequence? {
 
 fun extractRechargePinPrefix(rawInput: String) : CharSequence? {
     return filter(rawInput, AirtimeFilterPatterns.RECHARGE_PIN_PREFIX_REGEX).firstOrNull()?.let {
-        return extractSubstringUsingFirstAndLastIndices(it.value, getFirstAndLastIndexOfRegexSpec(it.value, Regex("\\*")))
+        val extractedString = extractSubstringUsingFirstAndLastIndices(it.value, getFirstAndLastIndexOfRegexSpec(it.value, Regex("\\*")))
+
+        /***
+         * The trimming below is implemented to remove unnecessary strings like in
+         * results where maybe the serial number on the recharge card is also filtered and returned with the main recharge card pin
+         */
+        return extractedString.split(Regex("\\s")).subList(1, extractedString.length - 1).joinToString { "" }
     }
 }
 

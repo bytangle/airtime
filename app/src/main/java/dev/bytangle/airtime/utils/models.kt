@@ -3,9 +3,9 @@ package dev.bytangle.airtime.utils
 // return payload after text recognition result is filtered
 data class AirtimeProcessedResult(
     val assumedNetwork : AirtimeSupportedNetwork,
-    val rechargePin : String,
-    val amount : String,
-    val pinPrefix: AirtimeNetworkAndPinPrefix
+    val rechargePin : CharSequence,
+    val amount : CharSequence,
+    val pinPrefix: CharSequence
 )
 
 data class AirtimeNetworkAndPinPrefix(
