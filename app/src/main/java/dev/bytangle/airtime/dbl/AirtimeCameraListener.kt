@@ -7,6 +7,7 @@ import com.google.mlkit.vision.text.TextRecognizer
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraOptions
 import com.otaliastudios.cameraview.CameraView
+import com.otaliastudios.cameraview.gesture.Gesture
 import dev.bytangle.airtime.utils.AirtimeProcessedResult
 
 class AirtimeCameraListener(
@@ -15,6 +16,15 @@ class AirtimeCameraListener(
     override fun onCameraOpened(options: CameraOptions) {
         super.onCameraOpened(options)
         startCameraFramesProcessing()
+    }
+
+    override fun onCameraClosed() {
+        super.onCameraClosed()
+        camera.clearGesture(Gesture.TAP)
+        camera.clearFocus()
+        camera.clearFrameProcessors()
+        camera.clearCameraListeners()
+        camera.close()
     }
 
     private fun startCameraFramesProcessing() {
@@ -26,9 +36,8 @@ class AirtimeCameraListener(
             val viewRotation = frame.rotationToView
             val data = frame.getData<ByteArray>()
 
-            val image = InputImage.fromByteArray(data, size.width, size.height, viewRotation, InputImage.IMAGE_FORMAT_NV21)
+            val image = InputImage.fromByteArray(data, size.width, size.height, viewRotation, format)
             val recognizer = TextRecognition.getClient()
-
             // perform text recognition here
             performTextRecognition(recognizer, image)
         }
