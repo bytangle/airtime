@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.bytangle.airtime.R
+import dev.bytangle.airtime.composables.components.ScanOverlay
 import dev.bytangle.airtime.viewmodels.ScanViewModel
 
 @Composable
@@ -139,6 +140,10 @@ fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity,
                         activity = activity,
                         camera = camera
                     ) // this start the preview and view analyzer use cases
+                    scanOverlay.setContent {
+                        ScanOverlay()
+                    }
+                    camera.removeView(scanOverlay)
                 }
             }
             Spacer(modifier = Modifier.height(80.dp))
