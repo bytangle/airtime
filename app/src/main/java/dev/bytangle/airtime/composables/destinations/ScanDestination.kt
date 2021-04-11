@@ -2,18 +2,11 @@ package dev.bytangle.airtime.composables.destinations
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.view.LayoutInflater
-import androidx.activity.compose.registerForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.rounded.FilterList
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,13 +16,9 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import dev.bytangle.airtime.databinding.ScanPreviewBinding
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat.requestPermissions
@@ -44,6 +33,7 @@ fun ScanDestination(
     activity : ComponentActivity,
     modifier : Modifier = Modifier
 ) {
+    val scanViewModel : ScanViewModel = viewModel()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -63,8 +53,13 @@ fun ScanDestination(
             val icon = remember { mutableStateOf(Icons.Filled.FlashlightOn)}
             FloatingActionButton(
                 onClick = {
-                          if (icon.value == Icons.Filled.FlashlightOn) icon.value = Icons.Filled.FlashlightOff
-                            else icon.value = Icons.Filled.FlashlightOn
+                    if (icon.value == Icons.Filled.FlashlightOn) {
+                        icon.value = Icons.Filled.FlashlightOff
+                        scanViewModel.turnOnCameraFlashLight()
+                    } else {
+                        icon.value = Icons.Filled.FlashlightOn
+                        scanViewModel.turnOffCameraFlashLight()
+                    }
                 },
                 backgroundColor = colorResource(id = R.color.airtime_tertiary),
                 contentColor = MaterialTheme.colors.onSurface,
@@ -107,7 +102,7 @@ fun ScanDestination(
         }
 
         if (permissionGranted.value) {
-            ScanBodyContent(modifier = Modifier.padding(it), activity = activity)
+            ScanBodyContent(modifier = Modifier.padding(it), activity = activity, scanViewModel = scanViewModel)
         } else {
             // education ui here
             Text(text = "not granted")
@@ -117,8 +112,7 @@ fun ScanDestination(
 }
 
 @Composable
-fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity) {
-    val scanViewModel : ScanViewModel = viewModel()
+fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity, scanViewModel : ScanViewModel) {
     Surface(
         modifier = modifier,
         color = colorResource(id = R.color.blue_bg)
