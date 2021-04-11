@@ -13,11 +13,15 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.camera.core.ExperimentalUseCaseGroup
 import androidx.camera.lifecycle.ExperimentalUseCaseGroupLifecycle
+import com.otaliastudios.cameraview.CameraView
 
-@ExperimentalUseCaseGroup
-@ExperimentalUseCaseGroupLifecycle
 class ScanViewModel : ViewModel() {
     private lateinit var cameraExecutor : ExecutorService
+    
+    fun startScanUsingCameraView(activity: ComponentActivity, camera : CameraView) {
+        // set lifecycle owner of camera
+        camera.setLifecycleOwner(activity)
+    }
 
     fun startScan(activity: ComponentActivity, viewFinder : PreviewView) {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(activity)
@@ -36,17 +40,11 @@ class ScanViewModel : ViewModel() {
             }
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-            val viewPort = ViewPort.Builder(Rational(500,500), viewFinder.rotation.toInt()).build()
-            val useCaseGroup = UseCaseGroup.Builder()
-                .addUseCase(preview)
-                .addUseCase(imageAnalyzer)
-                .setViewPort(viewPort)
-                .build()
-
+            
             try {
                 cameraProvider.unbindAll()
                 // bind preview use case and image analyzer use case
-                cameraProvider.bindToLifecycle(activity, cameraSelector, useCaseGroup)
+                cameraProvider.bindToLifecycle(activity, cameraSelector, preview, imageAnalyzer)
 
             } catch (err : Exception) {
                 Log.e("AirtimeCameraX", "Use case binding failed", err)
