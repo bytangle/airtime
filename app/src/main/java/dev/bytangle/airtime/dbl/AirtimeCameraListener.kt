@@ -28,7 +28,7 @@ class AirtimeCameraListener(
 
             val image = InputImage.fromByteArray(data, size.width, size.height, viewRotation, format)
             val recognizer = TextRecognition.getClient()
-            
+
             // perform text recognition here
             performTextRecognition(recognizer, image)
         }
