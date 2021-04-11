@@ -7,6 +7,7 @@
         <com.otaliastudios.cameraview.CameraView
             android:id="@+id/camera"
             android:keepScreenOn="true"
+            app:cameraAudio="off"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"

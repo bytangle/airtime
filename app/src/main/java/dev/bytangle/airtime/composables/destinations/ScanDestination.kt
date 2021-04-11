@@ -141,9 +141,9 @@ fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity)
                 AndroidViewBinding(
                     factory = ScanPreviewBinding::inflate
                 ) {
-                    scanViewModel.startScan(
+                    scanViewModel.startScanUsingCameraView(
                         activity = activity,
-                        viewFinder = scanPreview
+                        camera = camera
                     ) // this start the preview and view analyzer use cases
                 }
             }
