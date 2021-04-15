@@ -2,6 +2,8 @@ package dev.bytangle.airtime.composables.destinations
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -112,6 +114,7 @@ fun ScanDestination(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity, scanViewModel : ScanViewModel) {
     Surface(
