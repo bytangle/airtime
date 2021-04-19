@@ -14,7 +14,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
-                <androidx.compose.ui.platform.ComposeView
+                <dev.bytangle.airtime.customviews.ScanOverlay
                     android:id="@+id/scan_overlay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
