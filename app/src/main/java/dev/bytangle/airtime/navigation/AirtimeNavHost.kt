@@ -7,6 +7,7 @@ import androidx.core.app.ComponentActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
+import dev.bytangle.airtime.composables.destinations.RechargeDestination
 import dev.bytangle.airtime.composables.destinations.ScanDestination
 import dev.bytangle.airtime.composables.destinations.SettingsDestination
 import dev.bytangle.airtime.composables.destinations.UsageDestination
@@ -23,5 +24,8 @@ fun AirtimeNavHost(
            navHostController = navHostController,
            activity = activity
        )}
+       composable(AirtimeDestination.Recharge.route) {
+           RechargeDestination(navHostController = navHostController)
+       }
    }
 }

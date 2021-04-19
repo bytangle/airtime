@@ -11,12 +11,13 @@ sealed class AirtimeDestination(val route : String, @StringRes val resourceId : 
     object Scan : AirtimeDestination(route = "scan", resourceId = R.string.scan, icon = Icons.Outlined.AspectRatio)
     object Usage : AirtimeDestination(route = "usage", resourceId = R.string.usage, icon = Icons.TwoTone.Insights)
     object Settings : AirtimeDestination(route = "settings", resourceId = R.string.settings, icon = Icons.TwoTone.Settings)
-
+    object Recharge : AirtimeDestination(route = "recharge", resourceId = R.string.recharge, icon = Icons.TwoTone.Receipt)
     companion object {
         val destinations = listOf(
             AirtimeDestination.Scan,
             AirtimeDestination.Usage,
-            AirtimeDestination.Settings
+            AirtimeDestination.Settings,
+            AirtimeDestination.Recharge
         )
     }
 }

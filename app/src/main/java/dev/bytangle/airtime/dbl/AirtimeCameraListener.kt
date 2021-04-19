@@ -34,7 +34,9 @@ class AirtimeCameraListener(
             val format = frame.format
             val userRotation = frame.rotationToUser
             val viewRotation = frame.rotationToView
+
             val data = frame.getData<ByteArray>()
+
 
             val image = InputImage.fromByteArray(data, size.width, size.height, userRotation, InputImage.IMAGE_FORMAT_NV21)
             val recognizer = TextRecognition.getClient()
@@ -46,6 +48,11 @@ class AirtimeCameraListener(
     private fun performTextRecognition(recognizer : TextRecognizer, image : InputImage) {
         // recognition block
         recognizer.process(image).addOnSuccessListener { visionText ->
+            // do not scan and process recognized text if the chunks is not more ten characters
+            if (visionText.text.length < 10) {
+                return@addOnSuccessListener
+            }
+
             // this class handles filtering of text
             val processedResult : AirtimeProcessedResult = AirtimeTextFilter.process(visionText)
 

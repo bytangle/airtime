@@ -30,7 +30,7 @@ class ScanViewModel : ViewModel() {
         camera.audio = Audio.OFF
         camera.flash = flashLightState
         camera.engine = Engine.CAMERA2
-        camera.frameProcessingPoolSize = 2
+        camera.frameProcessingPoolSize = 1
         camera.exposureCorrection = 2F
         camera.mode = Mode.PICTURE
 
