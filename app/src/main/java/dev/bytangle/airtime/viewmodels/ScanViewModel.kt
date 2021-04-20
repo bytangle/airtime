@@ -1,30 +1,36 @@
 package dev.bytangle.airtime.viewmodels
 
-import android.content.Context
-import android.graphics.PointF
-import android.graphics.Rect
-import android.location.Location
 import android.os.Build
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.material.*
 import androidx.core.app.ComponentActivity
-import androidx.core.view.drawToBitmap
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigate
 import com.otaliastudios.cameraview.CameraView
 import com.otaliastudios.cameraview.controls.*
 import com.otaliastudios.cameraview.gesture.Gesture
 import com.otaliastudios.cameraview.gesture.GestureAction
-import com.otaliastudios.cameraview.markers.AutoFocusMarker
-import com.otaliastudios.cameraview.markers.AutoFocusTrigger
-import com.otaliastudios.cameraview.size.Size
-import com.otaliastudios.cameraview.size.SizeSelector
-import dev.bytangle.airtime.dbl.AirtimeCameraListener
+import dev.bytangle.airtime.dbl.processCameraFrames
+import dev.bytangle.airtime.navigation.AirtimeDestination
+import dev.bytangle.airtime.utils.AirtimeProcessedResult
+import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 class ScanViewModel : ViewModel() {
+
+    var scanBottomSheetScaffoldState = BottomSheetScaffoldState(
+        bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed),
+        snackbarHostState = SnackbarHostState(),
+        drawerState = DrawerState(DrawerValue.Closed)
+    )
+
     private var flashLightState : Flash = Flash.OFF
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun startScanUsingCameraView(activity: ComponentActivity, camera : CameraView) {
+    fun startScanUsingCameraView(activity: ComponentActivity, camera : CameraView, navHostController : NavHostController) {
         // Configurations
         camera.setLifecycleOwner(activity)
         camera.audio = Audio.OFF
@@ -42,8 +48,28 @@ class ScanViewModel : ViewModel() {
         // Gesture setup
         camera.mapGesture(Gesture.TAP, GestureAction.AUTO_FOCUS)
 
-        // assign listener to handle the rest of the logic
-        camera.addCameraListener(AirtimeCameraListener(camera))
+        // handle camera frames
+        // the frames are processed and pin extracted
+        // the process result is obtained through lambda function
+        processCameraFrames(
+            camera
+        ) { processedResult ->
+            val tag = "AirtimeProcessedResult"
+            Log.d(tag, "Recharge Pin: " + processedResult.rechargePin.toString())
+            Log.d(tag, "Pin Prefix: " + processedResult.pinPrefix.toString())
+            Log.d(tag, "Amount: " + processedResult.amount.toString())
+            Log.d(tag, "Network: " + processedResult.assumedNetwork.name)
+
+            val airtimeInfo = "${processedResult.rechargePin},${processedResult.pinPrefix},${processedResult.amount},${processedResult.assumedNetwork.name}"
+            navHostController.navigate(AirtimeDestination.Recharge.route + "/$airtimeInfo")
+        }
+
+    }
+
+    private fun handleAirtimeProcessedResult(processedResult: AirtimeProcessedResult) {
+        viewModelScope.launch {
+            scanBottomSheetScaffoldState.bottomSheetState.expand()
+        }
     }
 
     fun turnOnCameraFlashLight() {

@@ -29,6 +29,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.bytangle.airtime.R
 import dev.bytangle.airtime.viewmodels.ScanViewModel
 
+@ExperimentalMaterialApi
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ScanDestination(
     navHostController : NavHostController,
@@ -104,7 +106,7 @@ fun ScanDestination(
         }
 
         if (permissionGranted.value) {
-            ScanBodyContent(modifier = Modifier.padding(it), activity = activity, scanViewModel = scanViewModel)
+            ScanBodyContent(modifier = Modifier.padding(it), activity = activity, scanViewModel = scanViewModel, navHostController = navHostController)
         } else {
             // education ui here
             Text(text = "not granted")
@@ -113,9 +115,10 @@ fun ScanDestination(
     }
 }
 
+@ExperimentalMaterialApi
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity, scanViewModel : ScanViewModel) {
+fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity, scanViewModel : ScanViewModel, navHostController : NavHostController) {
     Surface(
         modifier = modifier,
         color = colorResource(id = R.color.blue_bg)
@@ -140,11 +143,9 @@ fun ScanBodyContent(modifier : Modifier = Modifier, activity: ComponentActivity,
                 ) {
                     scanViewModel.startScanUsingCameraView(
                         activity = activity,
-                        camera = camera
+                        camera = camera,
+                        navHostController = navHostController
                     ) // this start the preview and view analyzer use cases
-//                    scanOverlay.setContent {
-//                        ScanOverlay()
-//                    }
                 }
             }
             Spacer(modifier = Modifier.height(80.dp))
